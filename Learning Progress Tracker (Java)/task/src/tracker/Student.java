@@ -7,7 +7,6 @@ public class Student {
             String[] credentials = data.split(" ");
             if (isCorrectName(credentials[0], credentials[1]) && isCorrectEmail(credentials[credentials.length - 1])) {
                 System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
-
                 return true;
             }
         } else {
@@ -22,12 +21,12 @@ public class Student {
         if (firstName.length() > 1 && lastName.length() > 1 && firstName.matches(nameRegex) && lastName.matches(nameRegex)) {
             return true;
         }
-        if (firstName.matches(nameRegex) && !lastName.matches(nameRegex) || lastName.length() <= 1) {
+        if (!lastName.matches(nameRegex) || lastName.length() <= 1) {
             System.out.printf(Messages.ADD_ERROR.getMessage(), "last name");
-            return false;
-        } else if (firstName.length() <= 1 || !firstName.matches(nameRegex) && lastName.matches(nameRegex)) {
+        }
+        if (firstName.length() <= 1 || !firstName.matches(nameRegex)) {
             System.out.printf(Messages.ADD_ERROR.getMessage(), "first name");
-       }
+        }
         return false;
     }
 
@@ -35,9 +34,8 @@ public class Student {
         String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.+[a-zA-Z0-9.-]+$";
         if (email.matches(emailRegex)) {
             return true;
-        } else {
-            System.out.printf(Messages.ADD_ERROR.getMessage(), "email");
-            return false;
         }
+        System.out.printf(Messages.ADD_ERROR.getMessage(), "email");
+        return false;
     }
 }

@@ -24,7 +24,6 @@ public class Tracker {
             if (command.trim().isEmpty()) {
                 System.out.println(Messages.NO_INPUT.getMessage());
             } else {
-
                 switch (command) {
                     case "exit" -> {
                         System.out.println(Messages.EXIT.getMessage());
@@ -33,7 +32,7 @@ public class Tracker {
                     case "add students" -> processInput();
                     case "back" -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case "null" -> System.out.println(Messages.NO_INPUT.getMessage());
-                        default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
+                    default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
                 }
             }
         }
