@@ -1,19 +1,17 @@
 package tracker;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Tracker {
-    int studentsCounter;
+    Map<String, Student> students = new LinkedHashMap<>();
 
     Scanner scanner = new Scanner(System.in);
 
     public void startTracker() {
-        printMessage(Messages.TITLE.getMessage());
+        System.out.println(Messages.TITLE.getMessage());
         printMenu();
-    }
-
-    void printMessage(String msg) {
-        System.out.println(msg);
     }
 
     void printMenu() {
@@ -30,7 +28,7 @@ public class Tracker {
                         return;
                     }
                     case "add students" -> processInput();
-                    case "list" -> Student.printStudents();
+                    case "list" -> printStudents();
                     case "back" -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case "null" -> System.out.println(Messages.NO_INPUT.getMessage());
                     default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
@@ -40,12 +38,35 @@ public class Tracker {
     }
 
     void processInput() {
-        System.out.printf(Messages.ADD_ACTION.getMessage(), "email");
+        System.out.printf(Messages.ADD_ACTION.getMessage());
         String input = scanner.nextLine();
         while (!input.equals("back")) {
-            if (Student.checkCredentials(input)) studentsCounter++;
+            try {
+                Student student = new Student(input);
+                if (isEmailUnique(student.getEmail())) {
+                    students.put(student.getId(), student);
+                    System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
+                }
+                else System.out.println(Messages.EMAIL_EXISTS.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+
             input = scanner.nextLine();
         }
-        System.out.printf(Messages.ADD_COMPLETE.getMessage(), studentsCounter);
+        System.out.printf(Messages.ADD_COMPLETE.getMessage(), students.size());
+    }
+
+    boolean isEmailUnique(String email) {
+        return !students.containsKey(email.hashCode());
+    }
+
+    void printStudents() {
+        if (students.isEmpty()) {
+            System.out.println(Messages.NO_STUDENTS.getMessage());
+        } else {
+            System.out.println("Students:\n");
+            students.keySet().forEach(System.out::println);
+        }
     }
 }

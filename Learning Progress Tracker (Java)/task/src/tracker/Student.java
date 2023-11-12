@@ -1,79 +1,72 @@
 package tracker;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Student {
+
+    private String firstName;
+    private String lastName;
+    private String email;
+
+    public String getId() {
+        return String.valueOf(email.hashCode());
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        if (isCorrectName(firstName)) this.firstName = firstName;
+        else throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "first name"));
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        if (isCorrectName(lastName)) this.lastName = lastName;
+        else throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "last name"));
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        if (isCorrectEmail(email)) this.email = email;
+        else throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "email"));
+    }
 
     @Override
     public int hashCode() {
         return super.hashCode();
     }
 
-    static Map<String,String> students = new LinkedHashMap<>();
+    public Student(String userInput) {
+        if (userInput.chars().filter(c -> c == (int) ' ').count() > 1) {
+            int firstSpaceIndex = userInput.indexOf(" ");
+            int lastSpaceIndex = userInput.lastIndexOf(" ");
+            setFirstName(userInput.substring(0, firstSpaceIndex));
+            setLastName(userInput.substring(firstSpaceIndex + 1, lastSpaceIndex));
+            setEmail(userInput.substring(lastSpaceIndex + 1));
 
-    public static boolean checkCredentials(String data) {
-        if (data.chars().filter(c -> c == (int) ' ').count() > 1) {
-            String[] credentials = data.split(" ");
-            if (isCorrectName(credentials[0], credentials[1]) && isCorrectEmail(credentials[credentials.length - 1])) {
-                addStudent(credentials[credentials.length - 1]);
-                System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
-                return true;
-            }
         } else {
-            System.out.printf(Messages.ADD_ERROR.getMessage(), "credentials");
+            throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "credentials"));
         }
-        return false;
 
     }
 
-    static boolean isCorrectName(String firstName, String lastName) {
+    static boolean isCorrectName(String name) {
         String nameRegex = "^[A-Za-z]+((\\s)?((['\\-.])?([A-Za-z])+))*$";
-        if (firstName.length() > 1 && lastName.length() > 1 && firstName.matches(nameRegex) && lastName.matches(nameRegex)) {
-            return true;
-        }
-        if (!lastName.matches(nameRegex) || lastName.length() <= 1) {
-            System.out.printf(Messages.ADD_ERROR.getMessage(), "last name");
-        }
-        if (firstName.length() <= 1 || !firstName.matches(nameRegex)) {
-            System.out.printf(Messages.ADD_ERROR.getMessage(), "first name");
-        }
-        return false;
+        if (name.length() > 1 && name.matches(nameRegex)) return true;
+        else return false;
     }
 
     static boolean isCorrectEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.+[a-zA-Z0-9.-]+$";
-        if (email.matches(emailRegex) && isEmailUnique(email)) {
-            return true;
-        } else if (email.matches(emailRegex) && !isEmailUnique(email)) {
-            System.out.println(Messages.EMAIL_EXISTS.getMessage());
-            return false;
-        }
-        System.out.printf(Messages.ADD_ERROR.getMessage(), "email");
+        if (email.matches(emailRegex)) return true;
         return false;
     }
 
-    static boolean isEmailUnique(String email) {
-        if (!students.isEmpty() && students.containsValue(email)) {
-            return false;
-        } else if (students.isEmpty()) {
-            return true;
-        } else {
-            return true;
-        }
-    }
-
-    static void addStudent(String email) {
-        students.put(String.valueOf(email.hashCode()), email);
-        //students.entrySet().forEach(System.out::println);
-    }
-
-    static void printStudents() {
-        if (students.isEmpty()) {
-            System.out.println(Messages.NO_STUDENTS.getMessage());
-        } else {
-            System.out.println("Students:\n");
-            students.keySet().forEach(System.out::println);
-        }
-    }
 }
