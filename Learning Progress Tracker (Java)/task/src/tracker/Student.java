@@ -7,8 +7,8 @@ public class Student {
     private String lastName;
     private String email;
 
-    public String getId() {
-        return String.valueOf(email.hashCode());
+    public int getId() {
+        return email.hashCode();
     }
 
     public String getFirstName() {

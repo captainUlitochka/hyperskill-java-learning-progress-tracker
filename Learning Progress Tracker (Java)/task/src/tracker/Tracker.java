@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Tracker {
-    Map<String, Student> students = new LinkedHashMap<>();
+    Map<Integer, Student> students = new LinkedHashMap<>();
 
     Scanner scanner = new Scanner(System.in);
 
