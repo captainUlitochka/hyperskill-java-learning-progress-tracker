@@ -67,4 +67,13 @@ public class Student {
         students.put(String.valueOf(email.hashCode()), email);
         //students.entrySet().forEach(System.out::println);
     }
+
+    static void printStudents() {
+        if (students.isEmpty()) {
+            System.out.println(Messages.NO_STUDENTS.getMessage());
+        } else {
+            System.out.println("Students:\n");
+            students.keySet().forEach(System.out::println);
+        }
+    }
 }

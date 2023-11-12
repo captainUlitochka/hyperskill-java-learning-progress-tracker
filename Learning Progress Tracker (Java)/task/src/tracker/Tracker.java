@@ -30,6 +30,7 @@ public class Tracker {
                         return;
                     }
                     case "add students" -> processInput();
+                    case "list" -> Student.printStudents();
                     case "back" -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case "null" -> System.out.println(Messages.NO_INPUT.getMessage());
                     default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
