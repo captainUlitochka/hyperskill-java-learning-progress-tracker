@@ -41,20 +41,25 @@ public class Tracker {
         System.out.printf(Messages.ADD_ACTION.getMessage());
         String input = scanner.nextLine();
         while (!input.equals("back")) {
-            try {
-                Student student = new Student(input);
-                if (isEmailUnique(student.getEmail())) {
-                    students.put(student.getId(), student);
-                    System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
-                }
-                else System.out.println(Messages.EMAIL_EXISTS.getMessage());
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-
+            addStudent(input);
             input = scanner.nextLine();
         }
         System.out.printf(Messages.ADD_COMPLETE.getMessage(), students.size());
+    }
+
+    public boolean addStudent(String input) {
+        try {
+            Student student = new Student(input);
+            if (isEmailUnique(student.getEmail())) {
+                students.put(student.getId(), student);
+                System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
+                return true;
+            }
+           else System.out.println(Messages.EMAIL_EXISTS.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     boolean isEmailUnique(String email) {
