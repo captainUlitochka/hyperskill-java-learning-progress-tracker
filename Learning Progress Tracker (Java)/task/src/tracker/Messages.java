@@ -7,7 +7,7 @@ public enum Messages {
     NO_INPUT("No input.\n"),
     NO_STUDENTS("No students found\n"),
     COMMAND_ERROR("Unknown command!\n"),
-    ADD_ACTION("Enter student credentials or 'back' to return:\n"),
+    ADD_STUDENT("Enter student credentials or 'back' to return:\n"),
     ADD_SUCCESSFUL("The student has been added.\n"),
     ADD_COMPLETE("Total %d students have been added.\n"),
     ADD_PONTS("Enter an id and points or 'back' to return\n"),
