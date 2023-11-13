@@ -27,7 +27,8 @@ public class Tracker {
                         System.out.println(Messages.EXIT.getMessage());
                         return;
                     }
-                    case "add students" -> processInput();
+                    case "add students" -> processStudentInput();
+                    case "add points" -> processPointsInput();
                     case "list" -> printStudents();
                     case "back" -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case "null" -> System.out.println(Messages.NO_INPUT.getMessage());
@@ -37,8 +38,38 @@ public class Tracker {
         }
     }
 
-    void processInput() {
-        System.out.printf(Messages.ADD_ACTION.getMessage());
+    void processPointsInput() {
+        System.out.println(Messages.ADD_PONTS.getMessage());
+        String input = scanner.nextLine();
+        while (!input.equals("back")) {
+            addPoints(input);
+            input = scanner.nextLine();
+        }
+        System.out.println(Messages.POINTS_UPDATED.getMessage());
+    }
+
+    boolean addPoints(String input) {
+        String[] submission = input.split(" ");
+        for (Courses c: Courses.values()) {
+            int i = 1;
+            Course course = new Course(c.name()); //TODO: Баллы не запоминаются
+            course.setStudentScore(getStudentById(Integer.parseInt(submission[0])), Integer.parseInt(submission[i]));
+        }
+        return false;
+    }
+
+    Student getStudentById(int id) {
+        for (Student s : students.values()) {
+           if (s.getId() == id) {
+               return s;
+           }
+        }
+        System.out.println(Messages.NO_STUDENTS);
+        return null;
+    }
+
+    void processStudentInput() {
+        System.out.println(Messages.ADD_STUDENT.getMessage());
         String input = scanner.nextLine();
         while (!input.equals("back")) {
             addStudent(input);
