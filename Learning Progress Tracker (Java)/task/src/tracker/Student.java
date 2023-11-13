@@ -3,12 +3,17 @@ package tracker;
 
 public class Student {
 
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
 
     public int getId() {
-        return email.hashCode();
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -34,13 +39,11 @@ public class Student {
     }
 
     public void setEmail(String email) {
-        if (isCorrectEmail(email)) this.email = email;
+        if (isCorrectEmail(email)) {
+            this.email = email;
+            setId(email.hashCode());
+        }
         else throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "email"));
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
     }
 
     public Student(String userInput) {
