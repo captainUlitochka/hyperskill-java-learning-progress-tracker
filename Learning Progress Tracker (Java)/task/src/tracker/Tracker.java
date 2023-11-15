@@ -78,12 +78,12 @@ public class Tracker {
         while (!input.equals("back")) {
             if (getStudentById(input) != null) {
                 int id = Integer.parseInt(input); //TODO:Пока не входит в эту ветку. Надо понять почему :(
-                System.out.println(String.format(Messages.STUDENT_DATA.getMessage(),
+                System.out.printf((Messages.STUDENT_DATA.getMessage()) + "%n",
                         input,
                         coursesList.get(0).getStudentScore(id),
                         coursesList.get(1).getStudentScore(id),
                         coursesList.get(2).getStudentScore(id),
-                        coursesList.get(3).getStudentScore(id)));
+                        coursesList.get(3).getStudentScore(id));
             }
             input = scanner.nextLine();
         }
@@ -98,7 +98,7 @@ public class Tracker {
                 }
             }
         }
-        System.out.println(String.format(Messages.INCORRECT_STUDENT_ID.getMessage(), input));
+        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()) + "%n", input);
         return null;
     }
 
