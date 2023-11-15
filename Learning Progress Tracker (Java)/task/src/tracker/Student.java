@@ -41,7 +41,6 @@ public class Student {
     public void setEmail(String email) {
         if (isCorrectEmail(email)) {
             this.email = email;
-            setId(email.hashCode());
         }
         else throw new IllegalArgumentException(String.format(Messages.ADD_ERROR.getMessage(), "email"));
     }
