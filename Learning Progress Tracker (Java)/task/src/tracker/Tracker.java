@@ -72,7 +72,7 @@ public class Tracker {
             journal.addStudent(input);
             input = scanner.nextLine();
         }
-        System.out.printf(Messages.ADD_COMPLETE.getMessage(), journal.studentList.size());
+        System.out.printf(Messages.ADD_COMPLETE.getMessage(), journal.getStudentList().size());
     }
 
     private void printStudents() {

@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Journal {
-    int nextStudentId;
-    List<Student> studentList;
-    List<Courses> coursesList;
+    private int nextStudentId;
+    private List<Student> studentList;
+    private List<Courses> coursesList;
+    private static final int DEFAULT_STUDENT_ID = 10000;
+    public List<Student> getStudentList() {
+        return studentList;
+    }
 
     public Journal() {
         studentList = new ArrayList<>();
         coursesList = new ArrayList<>();
         coursesList.addAll(List.of(Courses.values()));
-        nextStudentId = 10000;
+        nextStudentId = DEFAULT_STUDENT_ID;
     }
 
-     boolean addStudent(String input) {
+    boolean addStudent(String input) {
         try {
             Student student = new Student(input);
             if (isEmailUnique(student.getEmail())) {
