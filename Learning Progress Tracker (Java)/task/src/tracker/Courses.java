@@ -21,17 +21,14 @@ public enum Courses {
     }
 
     public int getStudentScore(int studentId) {
-        if (courseScores.containsKey(studentId)) {
-            return courseScores.get(studentId);
-        } else return 0;
+        return courseScores.getOrDefault(studentId, 0);
     }
 
-    public void setStudentScore(Student student, int score) {
-        int key = student.getId();
-        if (!courseScores.containsKey(key)) {
-            courseScores.put(key, score);
+    public void setStudentScore(int studentId, int score) {
+        if (!courseScores.containsKey(studentId)) {
+            courseScores.put(studentId, score);
         } else {
-            courseScores.put(key, courseScores.get(key) + score);
+            courseScores.put(studentId, courseScores.get(studentId) + score);
         }
         submissions++;
     }
