@@ -17,6 +17,7 @@ public enum Messages {
     INCORRECT_POINTS_FORMAT("Incorrect points format\n"),
     POINTS_UPDATED("Points updated\n"),
     FIND_STUDENTS("Enter an id or 'back' to return"),
+    LIST_OF_STUDENTS("Students:\n"),
     STUDENT_DATA("%s points: Java=%d; DSA=%d; Databases=%d; Spring=%d\n");
 
 
