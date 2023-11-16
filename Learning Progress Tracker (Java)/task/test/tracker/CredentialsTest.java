@@ -47,16 +47,16 @@ public class CredentialsTest {
     @ParameterizedTest
     @CsvSource({"'Ann Doe user@doe.com', 'John Doe user@doe.com'"})
     void credentialsWithDuplicateEmail(String firstInput, String secondInput) {
-        Tracker tracker = new Tracker();
-        assertTrue(tracker.addStudent(firstInput));
-        assertFalse(tracker.addStudent(secondInput));
+        Journal journal = new Journal();
+        assertTrue(journal.addStudent(firstInput));
+        assertFalse(journal.addStudent(secondInput));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Ann Doe ann@doe.com", "Jean-Claude O'Neill j.cld@m.work.com", "Robert Jemison Van de Graaff robert.g@xyz.to"})
     void checkStudentIdAdded(String input) {
-        Tracker tracker = new Tracker();
-        assertTrue(tracker.addStudent(input));
+        Journal journal = new Journal();
+        assertTrue(journal.addStudent(input));
     }
 
 

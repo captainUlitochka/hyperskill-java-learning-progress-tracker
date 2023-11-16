@@ -12,8 +12,8 @@ public class ScoresTest {
     @CsvSource({"'Ann Doe 123@123.com', '1000 1 2 3 4'"})
     @Disabled
     void addValidScores(String student, String score) {
-        Tracker tracker = new Tracker();
-        tracker.addStudent(student);
-        assertTrue(tracker.addPoints(score));
+        Journal journal = new Journal();
+        journal.addStudent(student);
+        assertTrue(journal.addPoints(score));
     }
 }
