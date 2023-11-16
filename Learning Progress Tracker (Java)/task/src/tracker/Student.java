@@ -59,12 +59,12 @@ public class Student {
 
     }
 
-    static boolean isCorrectName(String name) {
+    private static boolean isCorrectName(String name) {
         String nameRegex = "^[A-Za-z]+((\\s)?((['\\-.])?([A-Za-z])+))*$";
         return name.length() > 1 && name.matches(nameRegex);
     }
 
-    static boolean isCorrectEmail(String email) {
+    private static boolean isCorrectEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+\\.+[a-zA-Z0-9.-]+$";
         return email.matches(emailRegex);
     }

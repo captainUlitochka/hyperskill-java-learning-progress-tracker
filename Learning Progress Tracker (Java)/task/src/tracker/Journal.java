@@ -15,7 +15,7 @@ public class Journal {
         nextStudentId = 10000;
     }
 
-    public boolean addStudent(String input) {
+     boolean addStudent(String input) {
         try {
             Student student = new Student(input);
             if (isEmailUnique(student.getEmail())) {
@@ -49,19 +49,6 @@ public class Journal {
         return false;
     }
 
-    Student getStudentById(String input) {
-        String idRegex = "^[0-9]*$";
-        if (input.matches(idRegex)) {
-            for (Student s : studentList) {
-                if (s.getId() == Integer.parseInt(input)) {
-                    return s;
-                }
-            }
-        }
-        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()) + "%n", input);
-        return null;
-    }
-
     String getStudentScores(String input) {
         if (getStudentById(input) != null) {
             int id = Integer.parseInt(input);
@@ -88,7 +75,20 @@ public class Journal {
         return output.append(Messages.EMPTY_STUDENTS_LIST.getMessage()).toString();
     }
 
-    boolean isEmailUnique(String email) {
+    private Student getStudentById(String input) {
+        String idRegex = "^[0-9]*$";
+        if (input.matches(idRegex)) {
+            for (Student s : studentList) {
+                if (s.getId() == Integer.parseInt(input)) {
+                    return s;
+                }
+            }
+        }
+        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()) + "%n", input);
+        return null;
+    }
+
+    private boolean isEmailUnique(String email) {
         if (!studentList.isEmpty()) {
             for (Student studentModel :
                     studentList) {
