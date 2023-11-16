@@ -3,20 +3,24 @@ package tracker;
 import java.util.*;
 
 public class Tracker {
-    Map<Integer, Student> studentsMap = new LinkedHashMap<>();
-
-    List<Courses> coursesList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
-    int studentId = 10000;
+    Journal journal = new Journal();
+
+    private static final String EXIT = "exit";
+    private static final String ADD_STUDENTS = "add students";
+    private static final String ADD_POINTS = "add points";
+    private static final String LIST = "list";
+    private static final String FIND = "find";
+    private static final String BACK = "back";
+    private static final String NULL = "null";
+
 
     public void startTracker() {
         System.out.println(Messages.TITLE.getMessage());
-        coursesList.addAll(List.of(Courses.values()));
         printMenu();
     }
 
     void printMenu() {
-
         String command;
         while (scanner.hasNextLine()) {
             command = scanner.nextLine();
@@ -24,27 +28,27 @@ public class Tracker {
                 System.out.println(Messages.NO_INPUT.getMessage());
             } else {
                 switch (command) {
-                    case "exit" -> {
+                    case EXIT -> {
                         System.out.println(Messages.EXIT.getMessage());
                         return;
                     }
-                    case "add students" -> processStudentInput();
-                    case "add points" -> processPointsInput();
-                    case "list" -> printStudents();
-                    case "find" -> findStudentEntry();
-                    case "back" -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
-                    case "null" -> System.out.println(Messages.NO_INPUT.getMessage());
+                    case ADD_STUDENTS -> processStudentInput();
+                    case ADD_POINTS -> processPointsInput();
+                    case LIST -> printStudents();
+                    case FIND -> findStudentEntry();
+                    case BACK -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
+                    case NULL -> System.out.println(Messages.NO_INPUT.getMessage());
                     default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
                 }
             }
         }
     }
 
-    void processPointsInput() {
+    private void processPointsInput() {
         System.out.println(Messages.ADD_POINTS.getMessage());
         String input = scanner.nextLine();
         while (!input.equals("back")) {
-            if (addPoints(input)) {
+            if (journal.addPoints(input)) {
                 System.out.println(Messages.POINTS_UPDATED.getMessage());
             }
             input = scanner.nextLine();
@@ -52,100 +56,26 @@ public class Tracker {
 
     }
 
-    boolean addPoints(String input) {
-        //String apointsRegex = "(?:\\d+ ?){5}";
-        String[] submission = input.split(" ");
-        String studentId = submission[0];
-        int pointCounter = 1;
-        String pointsRegex = "^[0-9]+ +[0-9]+ +[0-9]+ +[0-9]+ +[0-9]+$";
-            if (getStudentById(studentId) != null) {
-                if (input.matches(pointsRegex)) {
-                Student student = getStudentById(studentId);
-                for (Courses c : coursesList) {
-                    c.setStudentScore(student, Integer.parseInt(submission[pointCounter]));
-                    pointCounter++;
-                }
-                return true;
-            } else System.out.println(Messages.INCORRECT_POINTS_FORMAT.getMessage());
-        }
-        return false;
-    }
-
-    void findStudentEntry() {//TODO:
+    private void findStudentEntry() {
         System.out.println(Messages.FIND_STUDENTS.getMessage());
         String input = scanner.nextLine();
-
-        while (!input.equals("back")) {
-            if (getStudentById(input) != null) {
-                int id = Integer.parseInt(input); //TODO:Пока не входит в эту ветку. Надо понять почему :(
-                System.out.printf((Messages.STUDENT_DATA.getMessage()) + "%n",
-                        input,
-                        coursesList.get(0).getStudentScore(id),
-                        coursesList.get(1).getStudentScore(id),
-                        coursesList.get(2).getStudentScore(id),
-                        coursesList.get(3).getStudentScore(id));
-            }
+        while (!input.equals(BACK)) {
+            System.out.println(journal.getStudentScores(input));
             input = scanner.nextLine();
         }
     }
 
-    Student getStudentById(String input) {
-        String idRegex = "^[0-9]*$";
-        if (input.matches(idRegex)) {
-            for (Student s : studentsMap.values()) {
-                if (s.getId() == Integer.parseInt(input)) {
-                    return s;
-                }
-            }
-        }
-        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()) + "%n", input);
-        return null;
-    }
-
-    void processStudentInput() {
+    private void processStudentInput() {
         System.out.println(Messages.ADD_STUDENT.getMessage());
         String input = scanner.nextLine();
-        while (!input.equals("back")) {
-            addStudent(input);
+        while (!input.equals(BACK)) {
+            journal.addStudent(input);
             input = scanner.nextLine();
         }
-        System.out.printf(Messages.ADD_COMPLETE.getMessage(), studentsMap.size());
+        System.out.printf(Messages.ADD_COMPLETE.getMessage(), journal.studentList.size());
     }
 
-    public boolean addStudent(String input) {
-        try {
-            Student student = new Student(input);
-            if (isEmailUnique(student.getEmail())) {
-                student.setId(studentId);
-                studentsMap.put(studentId, student);
-                studentId++;
-                System.out.println(Messages.ADD_SUCCESSFUL.getMessage());
-                return true;
-            } else System.out.println(Messages.EMAIL_EXISTS.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    boolean isEmailUnique(String email) {
-        if (!studentsMap.isEmpty()) {
-            for (Student studentModel :
-                    studentsMap.values()) {
-                if (studentModel.getEmail().equals(email)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    void printStudents() {
-        if (studentsMap.isEmpty()) {
-            System.out.println(Messages.EMPTY_STUDENTS_LIST.getMessage());
-        } else {
-            System.out.println("Students:");
-            studentsMap.keySet().forEach(System.out::println);
-        }
+    private void printStudents() {
+        System.out.println(journal.getListOfStudents());
     }
 }
