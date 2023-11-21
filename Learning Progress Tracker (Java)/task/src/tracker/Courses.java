@@ -23,6 +23,9 @@ public enum Courses {
     public String getCourseName() {
         return courseName;
     }
+    public int getSubmissions() {
+        return submissions;
+    }
 
     public int getStudentScore(int studentId) {
         return courseScores.getOrDefault(studentId, 0);
@@ -34,7 +37,9 @@ public enum Courses {
         } else {
             courseScores.put(studentId, courseScores.get(studentId) + score);
         }
-        submissions++;
+        if (score > 0) {
+            submissions++;
+        }
     }
 
     double getAverageScore() {

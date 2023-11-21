@@ -88,6 +88,10 @@ public class Tracker {
     }
 
     private void printStatistics() {
-        //TODO: реализовать метод
+        System.out.println(Messages.SHOW_STATS.getMessage());
+        StringBuilder results = new StringBuilder();
+
+        //results.append(Messages.MOST_POPULAR.getMessage())
+        //        .append()//TODO: get student of course's count
     }
 }

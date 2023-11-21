@@ -1,7 +1,6 @@
 package tracker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Journal {
     private int nextStudentId;
@@ -85,6 +84,12 @@ public class Journal {
             return studentList.stream().noneMatch(s -> s.getEmail().equals(email));
         }
         return true;
+    }
+
+    private String getPopularCourse() {
+        //TODO: пройтись по мапе студент-курс и скопировать в новую мапу только ненулевые значения. Или посчитать иначе.
+        // и сравнить размеры этих мап между курсами, чтоб найти самый популярный.
+        return "";
     }
 
 }
