@@ -10,6 +10,10 @@ public enum Courses {
 
     private final String courseName;
     private int submissions = 0;
+    private final static int JAVA_MAX_POINTS = 600;
+    private final static int DSA_MAX_POINTS = 400;
+    private final static int DB_MAX_POINTS = 480;
+    private final static int SPRING_MAX_POINTS = 550;
     HashMap<Integer, Integer> courseScores = new HashMap<>();
 
     Courses(String name) {
@@ -31,5 +35,9 @@ public enum Courses {
             courseScores.put(studentId, courseScores.get(studentId) + score);
         }
         submissions++;
+    }
+
+    double getAverageScore() {
+        return courseScores.values().stream().mapToDouble(Integer::doubleValue).average().orElse(0);
     }
 }

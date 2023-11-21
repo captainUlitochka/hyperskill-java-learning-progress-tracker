@@ -13,6 +13,7 @@ public class Tracker {
     private static final String FIND = "find";
     private static final String BACK = "back";
     private static final String NULL = "null";
+    private static final String STATISTICS = "statistics";
 
 
     public void startTracker() {
@@ -36,6 +37,7 @@ public class Tracker {
                     case ADD_POINTS -> processPointsInput();
                     case LIST -> printStudents();
                     case FIND -> findStudentEntry();
+                    case STATISTICS -> printStatistics();
                     case BACK -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case NULL -> System.out.println(Messages.NO_INPUT.getMessage());
                     default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
@@ -83,5 +85,9 @@ public class Tracker {
             System.out.println("Students:\n");
             journal.getStudentList().forEach(System.out::println);
         }
+    }
+
+    private void printStatistics() {
+        //TODO: реализовать метод
     }
 }
