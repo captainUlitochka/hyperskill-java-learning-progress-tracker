@@ -47,22 +47,13 @@ public class Tracker {
     private void processPointsInput() {
         System.out.println(Messages.ADD_POINTS.getMessage());
         String input = scanner.nextLine();
-        while (!input.equals("back")) {
+        while (!input.equals(BACK)) {
             if (journal.addPoints(input)) {
                 System.out.println(Messages.POINTS_UPDATED.getMessage());
             }
             input = scanner.nextLine();
         }
 
-    }
-
-    private void findStudentEntry() {
-        System.out.println(Messages.FIND_STUDENTS.getMessage());
-        String input = scanner.nextLine();
-        while (!input.equals(BACK)) {
-            System.out.println(journal.getStudentScores(input));
-            input = scanner.nextLine();
-        }
     }
 
     private void processStudentInput() {
@@ -75,7 +66,22 @@ public class Tracker {
         System.out.printf(Messages.ADD_COMPLETE.getMessage(), journal.getStudentList().size());
     }
 
+    private void findStudentEntry() {
+        System.out.println(Messages.FIND_STUDENTS.getMessage());
+        String input = scanner.nextLine();
+        while (!input.equals(BACK)) {
+            System.out.println(journal.getStudentScores(input));
+            input = scanner.nextLine();
+        }
+    }
+
+
     private void printStudents() {
-        System.out.println(journal.getListOfStudents());
+        if (journal.getStudentList().isEmpty()) {
+            System.out.println(Messages.EMPTY_STUDENTS_LIST.getMessage());
+        } else {
+            System.out.println("Students:\n");
+            journal.getStudentList().forEach(System.out::println);
+        }
     }
 }

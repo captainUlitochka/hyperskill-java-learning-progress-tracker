@@ -6,7 +6,7 @@ public enum Courses {
     JAVA("Java"),
     DSA("Data Structures and Algorithms"),
     DB("Databases"),
-    Spring("Spring");
+    SPRING("Spring");
 
     private final String courseName;
     private int submissions = 0;

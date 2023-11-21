@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Journal {
     private int nextStudentId;
-    private List<Student> studentList;
-    private List<Courses> coursesList;
+    private final List<Student> studentList;
+    private final List<Courses> coursesList;
     private static final int DEFAULT_STUDENT_ID = 10000;
     public List<Student> getStudentList() {
         return studentList;
@@ -39,11 +39,12 @@ public class Journal {
         String[] submission = input.split(" ");
         int pointCounter = 1;
         String pointsRegex = "^[0-9]+ +[0-9]+ +[0-9]+ +[0-9]+ +[0-9]+$";
-        if (getStudentById(submission[0]) != null) {
+        String studentId = submission[0];
+        if (getStudentById(studentId) != null) {
             if (input.matches(pointsRegex)) {
                 for (Courses c : coursesList) {
                     c.setStudentScore(
-                            Integer.parseInt(submission[0]),
+                            Integer.parseInt(studentId),
                             Integer.parseInt(submission[pointCounter]));
                     pointCounter++;
                 }
@@ -66,19 +67,6 @@ public class Journal {
         return null;
     }
 
-    String getListOfStudents() {
-        StringBuilder output = new StringBuilder();
-        if (!studentList.isEmpty()) {
-            output.append(Messages.LIST_OF_STUDENTS.getMessage());
-            for (Student s :
-                    studentList) {
-                output.append(s.getId()).append("\n");
-            }
-            return output.toString();
-        }
-        return output.append(Messages.EMPTY_STUDENTS_LIST.getMessage()).toString();
-    }
-
     private Student getStudentById(String input) {
         String idRegex = "^[0-9]*$";
         if (input.matches(idRegex)) {
@@ -94,12 +82,7 @@ public class Journal {
 
     private boolean isEmailUnique(String email) {
         if (!studentList.isEmpty()) {
-            for (Student studentModel :
-                    studentList) {
-                if (studentModel.getEmail().equals(email)) {
-                    return false;
-                }
-            }
+            return studentList.stream().noneMatch(s -> s.getEmail().equals(email));
         }
         return true;
     }
