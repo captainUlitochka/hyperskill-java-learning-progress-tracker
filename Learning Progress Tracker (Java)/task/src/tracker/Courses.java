@@ -23,6 +23,7 @@ public enum Courses {
     public String getCourseName() {
         return courseName;
     }
+
     public int getSubmissions() {
         return submissions;
     }
@@ -31,14 +32,17 @@ public enum Courses {
         return courseScores.getOrDefault(studentId, 0);
     }
 
+    public int getStudentsCount() {
+        return courseScores.size();
+    }
+
     public void setStudentScore(int studentId, int score) {
-        if (!courseScores.containsKey(studentId)) {
-            courseScores.put(studentId, score);
-        } else {
-            courseScores.put(studentId, courseScores.get(studentId) + score);
-        }
         if (score > 0) {
-            submissions++;
+            if (!courseScores.containsKey(studentId)) {
+                courseScores.put(studentId, score);
+            } else {
+                courseScores.put(studentId, courseScores.get(studentId) + score);
+            }
         }
     }
 

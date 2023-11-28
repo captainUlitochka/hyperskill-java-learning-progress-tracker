@@ -86,10 +86,43 @@ public class Journal {
         return true;
     }
 
-    private String getPopularCourse() {
-        //TODO: пройтись по мапе студент-курс и скопировать в новую мапу только ненулевые значения. Или посчитать иначе.
-        // и сравнить размеры этих мап между курсами, чтоб найти самый популярный.
-        return "";
+    /*
+    Удалю в следующем коммите, пока нужно ради примера:
+    String getPopularCourse() {
+        Courses result = coursesList.stream()
+                .filter(x -> x.getStudentsCount() > 0)
+                .max(Comparator.comparing(Courses::getStudentsCount))
+                .orElse(null);
+        if (result == null) {
+            return Messages.NO_DATA.getMessage();
+        }
+        return result.getCourseName();
+    }
+     */
+
+    String getMostPopularCourse() {
+        StringBuilder result = new StringBuilder();
+        coursesList.sort(Comparator.comparing(Courses::getStudentsCount).reversed());
+        return getString(result);
+    }
+
+    String getLeastPopularCourse() {
+        StringBuilder result = new StringBuilder();
+        coursesList.sort(Comparator.comparing(Courses::getStudentsCount));
+        return getString(result);
+    }
+
+    private String getString(StringBuilder result) {
+        result.append(coursesList.get(0).getCourseName());
+        for (int i = 0; i < coursesList.size() - 1; i++) {
+            if (coursesList.get(i).getStudentsCount() == coursesList.get(i + 1).getStudentsCount()) {
+                result
+                        .append(", ")
+                        .append(coursesList.get(i + 1).getCourseName())
+                        .append("\n");
+            }
+        }
+        return result.toString();
     }
 
 }

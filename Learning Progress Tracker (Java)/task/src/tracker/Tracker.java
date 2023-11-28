@@ -88,10 +88,28 @@ public class Tracker {
     }
 
     private void printStatistics() {
-        System.out.println(Messages.SHOW_STATS.getMessage());
-        StringBuilder results = new StringBuilder();
+        StringBuilder statistics = new StringBuilder(Messages.SHOW_STATS.getMessage());
+        statistics
+                .append(Messages.MOST_POPULAR.getMessage())
+                .append(journal.getMostPopularCourse())
+                .append(Messages.LEAST_POPULAR.getMessage())
+                .append(journal.getLeastPopularCourse())
+                .append(Messages.HIGH_ACTIVITY.getMessage())
+                .append(Messages.LOW_ACTIVITY.getMessage())
+                .append(Messages.EASY_COURSE.getMessage())
+                .append(Messages.HARD_COURSE.getMessage());
+        System.out.println(statistics);
+        String input = scanner.nextLine();
 
-        //results.append(Messages.MOST_POPULAR.getMessage())
-        //        .append()//TODO: get student of course's count
+        while (!input.equals(BACK)) {
+            String command = scanner.nextLine();
+            switch (command) {
+                case "java" -> System.out.println("java");
+                case "dsa" -> System.out.println("dsa");
+                case "databases" -> System.out.println("databases");
+                case "spring" -> System.out.println("spring");
+                default -> System.out.println(Messages.COURSE_NAME_ERROR.getMessage());
+            }
+        }
     }
 }
