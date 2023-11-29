@@ -125,4 +125,12 @@ public class Journal {
         return result.toString();
     }
 
+    String getCompletionState() {
+        for (Student s:
+             studentList) {
+            coursesList.get(s.getId()).getCourseCompletionByStudent(s.getId());
+        } //TODO: пока не понимаю, как печатать это в виде таблички. Надо подумать
+        return "";
+    }
+
 }

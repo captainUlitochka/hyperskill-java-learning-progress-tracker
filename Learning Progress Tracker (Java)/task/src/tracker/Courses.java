@@ -3,26 +3,25 @@ package tracker;
 import java.util.HashMap;
 
 public enum Courses {
-    JAVA("Java"),
-    DSA("Data Structures and Algorithms"),
-    DB("Databases"),
-    SPRING("Spring");
+    JAVA("Java", 600),
+    DSA("Data Structures and Algorithms", 400),
+    DB("Databases", 480),
+    SPRING("Spring", 550);
 
     private final String courseName;
+    private final int courseMaxPoints;
     private int submissions = 0;
-    private final static int JAVA_MAX_POINTS = 600;
-    private final static int DSA_MAX_POINTS = 400;
-    private final static int DB_MAX_POINTS = 480;
-    private final static int SPRING_MAX_POINTS = 550;
     HashMap<Integer, Integer> courseScores = new HashMap<>();
 
-    Courses(String name) {
+    Courses(String name, int points) {
         this.courseName = name;
+        this.courseMaxPoints = points;
     }
 
     public String getCourseName() {
         return courseName;
     }
+    public int getCourseMaxPoints() { return courseMaxPoints; }
 
     public int getSubmissions() {
         return submissions;
@@ -30,6 +29,11 @@ public enum Courses {
 
     public int getStudentScore(int studentId) {
         return courseScores.getOrDefault(studentId, 0);
+    }
+
+    public double getCourseCompletionByStudent(int studentId) {
+        int courseProgress = courseScores.getOrDefault(studentId, 0);
+        return (double) (courseProgress * 100) / courseMaxPoints; //TODO: это ещё не проверено
     }
 
     public int getStudentsCount() {
@@ -49,4 +53,5 @@ public enum Courses {
     double getAverageScore() {
         return courseScores.values().stream().mapToDouble(Integer::doubleValue).average().orElse(0);
     }
+
 }
