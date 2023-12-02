@@ -82,30 +82,32 @@ public class Tracker {
         if (journal.getStudentList().isEmpty()) {
             System.out.println(Messages.EMPTY_STUDENTS_LIST.getMessage());
         } else {
-            System.out.println("Students:\n");
-            journal.getStudentList().forEach(System.out::println);
+            System.out.println("Students:");
+            for (Student s :
+                    journal.getStudentList()) {
+                System.out.println(s.getId());
+            }
+            //journal.getStudentList().forEach(System.out::println);
         }
     }
 
     private void printStatistics() {
         String statistics = Messages.SHOW_STATS.getMessage() +
-                Messages.MOST_POPULAR.getMessage() +
                 journal.getMostPopularCourse() +
-                Messages.LEAST_POPULAR.getMessage() +
                 journal.getLeastPopularCourse() +
-                Messages.HIGH_ACTIVITY.getMessage() +
-                Messages.LOW_ACTIVITY.getMessage() +
-                Messages.EASY_COURSE.getMessage() +
-                Messages.HARD_COURSE.getMessage();
+                journal.getHighestActivityCourse() +
+                journal.getLowestActivityCourse() +
+                journal.getEasiestCourse() +
+                journal.getHardestCourse();
         System.out.println(statistics);
-        printCompletion();
+        printCompletionStateTable();
     }
 
-    private void printCompletion() {
+    private void printCompletionStateTable() {
         String input = scanner.nextLine();
         while (!input.equals(BACK)) {
-            System.out.println("id    points    completed");
             System.out.println(journal.getCompletionState(input));
+            input = scanner.nextLine();
         }
     }
 }
