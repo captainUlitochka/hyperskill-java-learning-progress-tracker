@@ -21,12 +21,12 @@ public enum Messages {
     LIST_OF_STUDENTS("Students:\n"),
     STUDENT_DATA("%s points: Java=%d; DSA=%d; Databases=%d; Spring=%d\n"),
     SHOW_STATS("Type the name of a course to see details or 'back' to quit\n"),
-    MOST_POPULAR("Most popular"),
-    LEAST_POPULAR("Least popular"),
-    HIGH_ACTIVITY("Highest activity"),
-    LOW_ACTIVITY("Lowest activity"),
-    EASY_COURSE("Easiest course"),
-    HARD_COURSE("Hardest course"),
+    MOST_POPULAR("Most popular: "),
+    LEAST_POPULAR("Least popular: "),
+    HIGH_ACTIVITY("Highest activity: "),
+    LOW_ACTIVITY("Lowest activity: "),
+    EASY_COURSE("Easiest course: "),
+    HARD_COURSE("Hardest course: "),
     NO_DATA("n/a");
 
 

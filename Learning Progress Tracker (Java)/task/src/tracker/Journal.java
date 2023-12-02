@@ -7,6 +7,7 @@ public class Journal {
     private final List<Student> studentList;
     private final List<Courses> coursesList;
     private static final int DEFAULT_STUDENT_ID = 10000;
+
     public List<Student> getStudentList() {
         return studentList;
     }
@@ -103,16 +104,16 @@ public class Journal {
     String getMostPopularCourse() {
         StringBuilder result = new StringBuilder();
         coursesList.sort(Comparator.comparing(Courses::getStudentsCount).reversed());
-        return getString(result);
+        return getCourseStatisticsString(result);
     }
 
     String getLeastPopularCourse() {
         StringBuilder result = new StringBuilder();
         coursesList.sort(Comparator.comparing(Courses::getStudentsCount));
-        return getString(result);
+        return getCourseStatisticsString(result);
     }
 
-    private String getString(StringBuilder result) {
+    private String getCourseStatisticsString(StringBuilder result) {
         result.append(coursesList.get(0).getCourseName());
         for (int i = 0; i < coursesList.size() - 1; i++) {
             if (coursesList.get(i).getStudentsCount() == coursesList.get(i + 1).getStudentsCount()) {
@@ -125,12 +126,27 @@ public class Journal {
         return result.toString();
     }
 
-    String getCompletionState() {
-        for (Student s:
-             studentList) {
-            coursesList.get(s.getId()).getCourseCompletionByStudent(s.getId());
-        } //TODO: пока не понимаю, как печатать это в виде таблички. Надо подумать
-        return "";
+    String getCompletionState(String courseName) {
+        StringBuilder result = new StringBuilder();
+        for (Courses c :
+                coursesList) {
+            if (c.getCourseName().toLowerCase().equals(courseName)) {
+                for (int i = 0; i < studentList.size(); i++) {
+                    int studentId = studentList.get(i).getId();
+                    result
+                            .append(studentId)
+                            .append(" ")
+                            .append(c.getStudentScore(studentId))
+                            .append("        ")
+                            .append(c.getCourseCompletionByStudent(studentId))
+                            .append("%");
+                }
+            }
+            else {
+                result.append(Messages.COURSE_NAME_ERROR.getMessage());
+            }
+        }
+        return result.toString();
     }
 
 }

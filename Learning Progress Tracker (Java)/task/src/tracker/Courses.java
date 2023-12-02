@@ -1,5 +1,7 @@
 package tracker;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 public enum Courses {
@@ -31,9 +33,11 @@ public enum Courses {
         return courseScores.getOrDefault(studentId, 0);
     }
 
-    public double getCourseCompletionByStudent(int studentId) {
+    public BigDecimal getCourseCompletionByStudent(int studentId) {
         int courseProgress = courseScores.getOrDefault(studentId, 0);
-        return (double) (courseProgress * 100) / courseMaxPoints; //TODO: это ещё не проверено
+
+        return new BigDecimal((double) courseProgress / courseMaxPoints).setScale(3, RoundingMode.HALF_UP).scaleByPowerOfTen(2);
+        //return (double) (courseProgress * 100) / courseMaxPoints; //TODO: это ещё не проверено
     }
 
     public int getStudentsCount() {

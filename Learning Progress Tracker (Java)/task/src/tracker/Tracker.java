@@ -99,17 +99,14 @@ public class Tracker {
                 .append(Messages.EASY_COURSE.getMessage())
                 .append(Messages.HARD_COURSE.getMessage());
         System.out.println(statistics);
-        String input = scanner.nextLine();
+        printCompletion();
+    }
 
+    private void printCompletion() {
+        String input = scanner.nextLine();
         while (!input.equals(BACK)) {
-            String command = scanner.nextLine();
-            switch (command) {
-                case "java" -> System.out.println("java");
-                case "dsa" -> System.out.println("dsa");
-                case "databases" -> System.out.println("databases");
-                case "spring" -> System.out.println("spring");
-                default -> System.out.println(Messages.COURSE_NAME_ERROR.getMessage());
-            }
+            System.out.println("id    points    completed");
+            System.out.println(journal.getCompletionState(input));
         }
     }
 }
