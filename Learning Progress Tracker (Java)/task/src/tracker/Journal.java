@@ -1,6 +1,7 @@
 package tracker;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Journal {
     private int nextStudentId;
@@ -101,50 +102,157 @@ public class Journal {
     }
      */
 
-    String getMostPopularCourse() {
-        StringBuilder result = new StringBuilder();
-        coursesList.sort(Comparator.comparing(Courses::getStudentsCount).reversed());
-        return getCourseStatisticsString(result);
-    }
 
-    String getLeastPopularCourse() {
-        StringBuilder result = new StringBuilder();
-        coursesList.sort(Comparator.comparing(Courses::getStudentsCount));
-        return getCourseStatisticsString(result);
-    }
+    //TODO: перенести заголовки в другое место
+    //TODO: для меньших значений проверять вычитание меньшего списка из большего
 
-    private String getCourseStatisticsString(StringBuilder result) {
-        result.append(coursesList.get(0).getCourseName());
-        for (int i = 0; i < coursesList.size() - 1; i++) {
-            if (coursesList.get(i).getStudentsCount() == coursesList.get(i + 1).getStudentsCount()) {
-                result
-                        .append(", ")
-                        .append(coursesList.get(i + 1).getCourseName())
-                        .append("\n");
+    boolean checkIfNoScores() {
+        int activity = 0;
+        for (Courses c:
+             coursesList) {
+            if (c.getSubmissionsCount() != 0) {
+                activity++;
             }
+        }
+        if (activity > 0) return false;
+        else return true;
+    }
+
+    String getMostPopularCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.MOST_POPULAR.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getStudentsCount).reversed());
+            result.append(getPopularCoursesString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
         }
         return result.toString();
     }
 
-    String getCompletionState(String courseName) {
+
+    String getLeastPopularCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.LEAST_POPULAR.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getStudentsCount));
+            result.append(getPopularCoursesString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
+        }
+        return result.toString();
+    }
+
+    private StringBuilder getPopularCoursesString(List<Courses> sortedCoursesList) {
+        StringBuilder result = new StringBuilder(sortedCoursesList.get(0).getCourseName());
+        int i = 1;
+        while ( i < (sortedCoursesList.size()) && sortedCoursesList.get(i).getStudentsCount() == sortedCoursesList.get(0).getStudentsCount()) {
+            result.append(", ")
+                    .append(sortedCoursesList.get(i).getCourseName());
+            i++;
+        }
+
+        result.append("\n");
+        return result;
+    }
+
+    String getEasiestCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.EASY_COURSE.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getAverageGrade).reversed());
+            result.append(getCoursesByComplexityString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
+        }
+        return result.toString();
+    }
+
+    String getHardestCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.HARD_COURSE.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getAverageGrade));
+            result.append(getCoursesByComplexityString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
+        }
+        return result.toString();
+    }
+
+    private StringBuilder getCoursesByComplexityString(List<Courses> sortedCoursesList) {
+        StringBuilder result = new StringBuilder(sortedCoursesList.get(0).getCourseName());
+        int i = 1;
+        while ( i < (sortedCoursesList.size()) && sortedCoursesList.get(i).getAverageGrade() == sortedCoursesList.get(0).getAverageGrade()) {
+            result.append(", ")
+                    .append(sortedCoursesList.get(i).getCourseName());
+            i++;
+        }
+
+        result.append("\n");
+        return result;
+    }
+
+    String getHighestActivityCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.HIGH_ACTIVITY.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getSubmissionsCount).reversed());
+        result.append(getCoursesByActivityString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
+        }
+        return result.toString();
+    }
+
+    String getLowestActivityCourse() {
+        List<Courses> sortedList = new ArrayList<>(coursesList);
+        StringBuilder result = new StringBuilder(Messages.LOW_ACTIVITY.getMessage());
+        if (!checkIfNoScores()) {
+            sortedList.sort(Comparator.comparing(Courses::getSubmissionsCount));
+            result.append(getCoursesByActivityString(sortedList));
+        } else {
+            result.append(Messages.NO_DATA.getMessage());
+        }
+        return result.toString();
+    }
+
+    private StringBuilder getCoursesByActivityString(List<Courses> sortedCoursesList) {
+        StringBuilder result = new StringBuilder(sortedCoursesList.get(0).getCourseName());
+        int i = 1;
+        while ( i < (sortedCoursesList.size()) && sortedCoursesList.get(i).getSubmissionsCount() == sortedCoursesList.get(0).getSubmissionsCount()) {
+            result.append(", ")
+                    .append(sortedCoursesList.get(i).getCourseName());
+            i++;
+        }
+        result.append("\n");
+        return result;
+    }
+
+    String getCompletionState(String input) {
+        //TODO: список отсортировать по проценту прохождения
         StringBuilder result = new StringBuilder();
-        for (Courses course :
-                coursesList) {
-            if (course.getCourseName().toLowerCase().equals(courseName)) {
-                for (Student student : studentList) {
-                    int studentId = student.getId();
-                    result
-                            .append(studentId)
-                            .append(" ")
-                            .append(course.getStudentScore(studentId))
-                            .append("        ")
-                            .append(course.getCourseCompletionByStudent(studentId))
-                            .append("%");
-                }
+        int indexOfCourse = IntStream
+                .range(0, coursesList.size())
+                .filter(index -> coursesList.get(index).getCourseName().equalsIgnoreCase(input))
+                .findFirst().orElse(-1);
+
+        if (indexOfCourse >= 0) {
+            result
+                    .append(coursesList.get(indexOfCourse).getCourseName())
+                    .append("\nid     points completed\n");
+            for (Student student :
+                    studentList) {
+                int studentId = student.getId();
+                result.append(studentId)
+                        .append(" ")
+                        .append(coursesList.get(indexOfCourse).getStudentScore(studentId))
+                        .append("        ")
+                        .append(coursesList.get(indexOfCourse).getCourseCompletionByStudent(studentId))
+                        .append("%\n");
             }
-            else {
-                result.append(Messages.COURSE_NAME_ERROR.getMessage());
-            }
+        } else {
+            result.append(Messages.COURSE_NAME_ERROR.getMessage());
         }
         return result.toString();
     }

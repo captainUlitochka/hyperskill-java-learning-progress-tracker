@@ -27,7 +27,7 @@ public enum Messages {
     LOW_ACTIVITY("Lowest activity: "),
     EASY_COURSE("Easiest course: "),
     HARD_COURSE("Hardest course: "),
-    NO_DATA("n/a");
+    NO_DATA("n/a\n");
 
 
     private final String message;
