@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public enum Courses {
     JAVA("Java", 600),
-    DSA("Data Structures and Algorithms", 400),
+    DSA("DSA", 400),
     DB("Databases", 480),
     SPRING("Spring", 550);
 
@@ -23,9 +23,8 @@ public enum Courses {
     public String getCourseName() {
         return courseName;
     }
-    public int getCourseMaxPoints() { return courseMaxPoints; }
 
-    public int getSubmissions() {
+    public int getSubmissionsCount() {
         return submissions;
     }
 
@@ -33,15 +32,22 @@ public enum Courses {
         return courseScores.getOrDefault(studentId, 0);
     }
 
+    public int getStudentsCount() {
+        return courseScores.size();
+    }
+    public double getAverageGrade() {
+        return courseScores
+                .values()
+                .stream()
+                .mapToInt(integer -> integer)
+                .average()
+                .orElse(0);
+    }
+
     public BigDecimal getCourseCompletionByStudent(int studentId) {
         int courseProgress = courseScores.getOrDefault(studentId, 0);
 
         return new BigDecimal((double) courseProgress / courseMaxPoints).setScale(3, RoundingMode.HALF_UP).scaleByPowerOfTen(2);
-        //return (double) (courseProgress * 100) / courseMaxPoints; //TODO: это ещё не проверено
-    }
-
-    public int getStudentsCount() {
-        return courseScores.size();
     }
 
     public void setStudentScore(int studentId, int score) {
@@ -51,11 +57,8 @@ public enum Courses {
             } else {
                 courseScores.put(studentId, courseScores.get(studentId) + score);
             }
+            submissions++;
         }
-    }
-
-    double getAverageScore() {
-        return courseScores.values().stream().mapToDouble(Integer::doubleValue).average().orElse(0);
     }
 
 }
