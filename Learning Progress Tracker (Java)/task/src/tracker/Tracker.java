@@ -88,16 +88,15 @@ public class Tracker {
     }
 
     private void printStatistics() {
-        StringBuilder statistics = new StringBuilder(Messages.SHOW_STATS.getMessage());
-        statistics
-                .append(Messages.MOST_POPULAR.getMessage())
-                .append(journal.getMostPopularCourse())
-                .append(Messages.LEAST_POPULAR.getMessage())
-                .append(journal.getLeastPopularCourse())
-                .append(Messages.HIGH_ACTIVITY.getMessage())
-                .append(Messages.LOW_ACTIVITY.getMessage())
-                .append(Messages.EASY_COURSE.getMessage())
-                .append(Messages.HARD_COURSE.getMessage());
+        String statistics = Messages.SHOW_STATS.getMessage() +
+                Messages.MOST_POPULAR.getMessage() +
+                journal.getMostPopularCourse() +
+                Messages.LEAST_POPULAR.getMessage() +
+                journal.getLeastPopularCourse() +
+                Messages.HIGH_ACTIVITY.getMessage() +
+                Messages.LOW_ACTIVITY.getMessage() +
+                Messages.EASY_COURSE.getMessage() +
+                Messages.HARD_COURSE.getMessage();
         System.out.println(statistics);
         printCompletion();
     }

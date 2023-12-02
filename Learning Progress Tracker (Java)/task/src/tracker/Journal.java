@@ -128,17 +128,17 @@ public class Journal {
 
     String getCompletionState(String courseName) {
         StringBuilder result = new StringBuilder();
-        for (Courses c :
+        for (Courses course :
                 coursesList) {
-            if (c.getCourseName().toLowerCase().equals(courseName)) {
-                for (int i = 0; i < studentList.size(); i++) {
-                    int studentId = studentList.get(i).getId();
+            if (course.getCourseName().toLowerCase().equals(courseName)) {
+                for (Student student : studentList) {
+                    int studentId = student.getId();
                     result
                             .append(studentId)
                             .append(" ")
-                            .append(c.getStudentScore(studentId))
+                            .append(course.getStudentScore(studentId))
                             .append("        ")
-                            .append(c.getCourseCompletionByStudent(studentId))
+                            .append(course.getCourseCompletionByStudent(studentId))
                             .append("%");
                 }
             }
