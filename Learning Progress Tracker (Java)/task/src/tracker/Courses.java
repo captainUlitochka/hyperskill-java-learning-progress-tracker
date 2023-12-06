@@ -14,7 +14,7 @@ public enum Courses {
     private final int courseMaxPoints;
     private int submissions = 0;
     private boolean isCompletedByStudent = false;
-    HashMap<Integer, Integer> courseScores = new HashMap<>();
+    final HashMap<Integer, Integer> courseScores = new HashMap<>();
 
     Courses(String name, int points) {
         this.courseName = name;
@@ -25,8 +25,8 @@ public enum Courses {
         return isCompletedByStudent;
     }
 
-    public void setCompletedByStudent(boolean completedByStudent) {
-        isCompletedByStudent = completedByStudent;
+    void setCompletedByStudent() {
+        isCompletedByStudent = true;
     }
 
     public String getCourseName() {

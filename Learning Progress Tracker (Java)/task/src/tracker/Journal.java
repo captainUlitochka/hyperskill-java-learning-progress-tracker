@@ -59,7 +59,7 @@ public class Journal {
     String getStudentScores(String input) {
         if (getStudentById(input) != null) {
             int id = Integer.parseInt(input);
-            return String.format((Messages.STUDENT_DATA.getMessage()) + "%n",
+            return String.format((Messages.STUDENT_DATA.getMessage()),
                     input,
                     coursesList.get(0).getStudentScore(id),
                     coursesList.get(1).getStudentScore(id),
@@ -78,7 +78,7 @@ public class Journal {
                 }
             }
         }
-        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()) + "%n", input);
+        System.out.printf((Messages.INCORRECT_STUDENT_ID.getMessage()), input);
         return null;
     }
 
@@ -257,7 +257,7 @@ public class Journal {
                             student.getLastName(),
                             course.getCourseName()));
                     coursesFinished++;
-                    course.setCompletedByStudent(true);
+                    course.setCompletedByStudent();
                 }
             }
             if (coursesFinished > 0) completionistCount++;

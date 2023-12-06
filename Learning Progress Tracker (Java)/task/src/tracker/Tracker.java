@@ -89,7 +89,6 @@ public class Tracker {
                     journal.getStudentList()) {
                 System.out.println(s.getId());
             }
-            //journal.getStudentList().forEach(System.out::println);
         }
     }
 
