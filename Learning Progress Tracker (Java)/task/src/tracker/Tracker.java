@@ -92,14 +92,8 @@ public class Tracker {
     }
 
     private void printStatistics() {
-        String statistics = Messages.SHOW_STATS.getMessage() +
-                journal.getMostPopularCourse() +
-                journal.getLeastPopularCourse() +
-                journal.getHighestActivityCourse() +
-                journal.getLowestActivityCourse() +
-                journal.getEasiestCourse() +
-                journal.getHardestCourse();
-        System.out.println(statistics);
+        System.out.println(Messages.SHOW_STATS.getMessage());
+        System.out.println(journal.getCourseStatistics());
         printCompletionStateTable();
     }
 

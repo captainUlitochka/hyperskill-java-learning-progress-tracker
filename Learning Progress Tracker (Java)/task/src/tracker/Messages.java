@@ -20,7 +20,7 @@ public enum Messages {
     FIND_STUDENTS("Enter an id or 'back' to return"),
     LIST_OF_STUDENTS("Students:\n"),
     STUDENT_DATA("%s points: Java=%d; DSA=%d; Databases=%d; Spring=%d\n"),
-    SHOW_STATS("Type the name of a course to see details or 'back' to quit\n"),
+    SHOW_STATS("\nType the name of a course to see details or 'back' to quit"),
     MOST_POPULAR("Most popular: "),
     LEAST_POPULAR("Least popular: "),
     HIGH_ACTIVITY("Highest activity: "),
