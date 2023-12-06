@@ -47,7 +47,7 @@ public enum Courses {
     public BigDecimal getCourseCompletionByStudent(int studentId) {
         int courseProgress = courseScores.getOrDefault(studentId, 0);
 
-        return new BigDecimal((double) courseProgress / courseMaxPoints).setScale(3, RoundingMode.HALF_UP).scaleByPowerOfTen(2);
+        return BigDecimal.valueOf((double) courseProgress / courseMaxPoints).setScale(3, RoundingMode.HALF_UP).scaleByPowerOfTen(2);
     }
 
     public void setStudentScore(int studentId, int score) {
