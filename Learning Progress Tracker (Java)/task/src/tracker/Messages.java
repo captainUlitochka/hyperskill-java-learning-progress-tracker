@@ -27,7 +27,9 @@ public enum Messages {
     LOW_ACTIVITY("Lowest activity: "),
     EASY_COURSE("Easiest course: "),
     HARD_COURSE("Hardest course: "),
-    NO_DATA("n/a\n");
+    NO_DATA("n/a\n"),
+    COMPLETION_NOTIFICATION("To: %s%nRe: Your Learning Progress%nHello, %s %s! You have accomplished our %s course!%n"),
+    TOTAL_NOTIFIED("Total %d students have been notified.");
 
 
     private final String message;

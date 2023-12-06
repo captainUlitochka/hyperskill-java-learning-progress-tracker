@@ -241,4 +241,29 @@ public class Journal {
         return result.toString();
     }
 
+    public String getCompletionists() {
+        int completionistCount = 0;
+        StringBuilder result = new StringBuilder();
+        for (Student student:
+             studentList) {
+            int coursesFinished = 0;
+            for (Courses course :
+                    coursesList) {
+                if (course.getStudentScore(student.getId()) == course.getCourseMaxPoints() && !course.isCompletedByStudent()) {
+                    result.append(String.format(
+                            Messages.COMPLETION_NOTIFICATION.getMessage(),
+                            student.getEmail(),
+                            student.getFirstName(),
+                            student.getLastName(),
+                            course.getCourseName()));
+                    coursesFinished++;
+                    course.setCompletedByStudent(true);
+                }
+            }
+            if (coursesFinished > 0) completionistCount++;
+        }
+        result.append(String.format(Messages.TOTAL_NOTIFIED.getMessage(), completionistCount));
+        return result.toString();
+    }
+
 }

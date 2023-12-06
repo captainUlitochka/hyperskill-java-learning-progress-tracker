@@ -14,6 +14,7 @@ public class Tracker {
     private static final String BACK = "back";
     private static final String NULL = "null";
     private static final String STATISTICS = "statistics";
+    private static final String NOTIFY = "notify";
 
 
     public void startTracker() {
@@ -38,6 +39,7 @@ public class Tracker {
                     case LIST -> printStudents();
                     case FIND -> findStudentEntry();
                     case STATISTICS -> printStatistics();
+                    case NOTIFY -> printNotificationMessages();
                     case BACK -> System.out.println(Messages.EXIT_SUGGESTION.getMessage());
                     case NULL -> System.out.println(Messages.NO_INPUT.getMessage());
                     default -> System.out.println(Messages.COMMAND_ERROR.getMessage());
@@ -103,5 +105,9 @@ public class Tracker {
             System.out.println(journal.getCompletionState(input));
             input = scanner.nextLine();
         }
+    }
+
+    private void printNotificationMessages() {
+        System.out.println(journal.getCompletionists());
     }
 }
